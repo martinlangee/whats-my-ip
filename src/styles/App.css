@@ -3,7 +3,7 @@ body {
 }
 
 .App {
-  text-align: center;
+  text-align: left;
   height: 100vh;
 }
 
@@ -34,12 +34,18 @@ body {
 }
 
 #infos {
-  flex: 50%;
+  padding-left: 50px;
+  flex: 30%;
   color: whitesmoke;
+}
+
+#flag {
+  width: 100px;
 }
 
 #mapCol {
   flex: 50%;
+  padding-right: 20px;
   color: whitesmoke;
   height: 400px;
   min-height: 70vh;

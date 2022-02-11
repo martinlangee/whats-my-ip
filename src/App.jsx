@@ -7,6 +7,7 @@ function App() {
   const [localIP, setLocalIP] = useState("");
   const [location, setLocation] = useState(null);
   const [countryName, setCountryName] = useState("");
+  const [countryFlag, setCountryFlag] = useState("");
 
   useEffect(() => {
     getData();
@@ -39,6 +40,7 @@ function App() {
       .then((resp) => {
         console.log(resp);
         setCountryName(resp.data[0].name.common);
+        setCountryFlag(resp.data[0].flags.png);
       })
       .catch((e) => console.log(e));
   };
@@ -64,6 +66,9 @@ function App() {
                 </p>
               ))
             : ""}
+          <div id="flag">
+            <img src={countryFlag} alt="Flag" />
+          </div>
         </div>
         <div id="mapCol">
           <p>
