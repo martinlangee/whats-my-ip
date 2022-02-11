@@ -12,13 +12,13 @@ function App() {
     getData();
   }, []);
 
-  const getData = async () => {
-    const countryKey = await getGeoData();
-    getCountryData(countryKey);
+  const getData = () => {
+    getGeoData()
+      .then((countryKey) => getCountryData(countryKey));
   };
 
   const getGeoData = () => {
-    return new Promise((resolve) => {
+    return new Promise((resolveFunc) => {
       Axios.get(
         `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_IPIFY_API_KEY}`
       )
@@ -26,7 +26,7 @@ function App() {
           console.log(resp);
           setLocalIP(resp.data.ip);
           setLocation(resp.data.location);
-          resolve(resp.data.location.country);
+          resolveFunc(resp.data.location.country);
         })
         .catch((e) => console.log(e));
     });
