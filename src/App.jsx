@@ -6,8 +6,7 @@ import "./styles/App.css";
 function App() {
   const [localIP, setLocalIP] = useState("");
   const [location, setLocation] = useState(null);
-  const [countryName, setCountryName] = useState("");
-  const [countryFlag, setCountryFlag] = useState("");
+  const [countryData, setCountryData] = useState({});
 
   useEffect(() => {
     getData();
@@ -35,12 +34,17 @@ function App() {
 
   const getCountryData = (countryKey) => {
     console.log({ countryKey });
-
     Axios.get(`https://restcountries.com/v3.1/alpha/${countryKey}`)
       .then((resp) => {
         console.log(resp);
-        setCountryName(resp.data[0].name.common);
-        setCountryFlag(resp.data[0].flags.png);
+        const data = resp.data[0];
+        setCountryData({
+          name: data.name.common,
+          flag: data.flags.png,
+          capital: data.capital[0],
+          currency: data.currencies.EUR.name,
+          currSymbol: data.currencies.EUR.symbol,
+        });
       })
       .catch((e) => console.log(e));
   };
@@ -54,7 +58,11 @@ function App() {
             <b>Infos about the location</b>
           </p>
           <p>My current IP: {localIP}</p>
-          <p>Country name: {countryName}</p>
+          <p>Country name: {countryData.name}</p>
+          <p>Capital: {countryData.capital}</p>
+          <p>
+            Currency: {countryData.currency} [{countryData.currSymbol}]
+          </p>
           <br></br>
           <p>
             <b>Generic information</b>
@@ -67,7 +75,7 @@ function App() {
               ))
             : ""}
           <div id="flag">
-            <img src={countryFlag} alt="Flag" />
+            <img src={countryData.flag} alt="Flag" />
           </div>
         </div>
         <div id="mapCol">
